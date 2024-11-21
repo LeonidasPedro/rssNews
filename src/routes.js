@@ -26,7 +26,7 @@ export default function App() {
           component={Home}
           options={{
             tabBarIcon: ({focused}) => (
-              <Ionicons name="home" color={focused ? '#2196F3' : '#808080'} size={22} />
+              <Ionicons name="home" color={focused ? '#2196F3' : '#808080'} size={26} />
             ),
           }}
         />
@@ -35,7 +35,7 @@ export default function App() {
           component={Categorias}
           options={{
             tabBarIcon: ({focused}) => (
-              <Ionicons name="newspaper-outline" color={focused ? '#2196F3' : '#808080'} size={22} />
+              <Ionicons name="newspaper-outline" color={focused ? '#2196F3' : '#808080'} size={26} />
             ),
           }}
         />
@@ -44,7 +44,7 @@ export default function App() {
           component={RssFeed}
           options={{
             tabBarIcon: ({focused}) => (
-              <Ionicons name="logo-rss" color={focused ? '#2196F3' : '#808080'} size={22} />
+              <Ionicons name="logo-rss" color={focused ? '#2196F3' : '#808080'} size={26} />
             ),
           }}
         />
@@ -53,7 +53,7 @@ export default function App() {
           component={Perfil}
           options={{
             tabBarIcon: ({focused}) => (
-              <Ionicons name="person" color={focused ? '#2196F3' : '#808080'} size={22} />
+              <Ionicons name="person" color={focused ? '#2196F3' : '#808080'} size={26} />
             ),
           }}
         />
@@ -71,6 +71,7 @@ export default function App() {
         <Stack.Screen component={Login} name="Login" />
         <Stack.Screen
           component={BottomTabNavigator}
+          name=""
         />
       </Stack.Navigator>
     </NavigationContainer>
