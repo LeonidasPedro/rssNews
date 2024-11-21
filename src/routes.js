@@ -71,7 +71,6 @@ export default function App() {
         <Stack.Screen component={Login} name="Login" />
         <Stack.Screen
           component={BottomTabNavigator}
-          name="BottomTabNavigator"
         />
       </Stack.Navigator>
     </NavigationContainer>
