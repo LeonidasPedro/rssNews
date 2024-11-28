@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Alert, ActivityIndicator } from 'react-native';
+import { Alert, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 import {
-    Container,
-    Error,
-    Form,
-    Input,
-    Button,
-    ButtonText,
-    WhiteBox,
+  Container,
+  WhiteBox,
+  Title,
+  Form,
+  Input,
+  Button,
+  ButtonText,
+  LinkText,
+  Error,
 } from './styles';
 
 export default function Login({ navigation }) {
@@ -20,7 +22,6 @@ export default function Login({ navigation }) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const signIn = async () => {
-
     setLoading(false);
 
     const body = {
@@ -30,84 +31,73 @@ export default function Login({ navigation }) {
 
     try {
       let response = await axios.post('http://127.0.0.1:8080/login', body);
-      response = {status: 200};
+      response = { status: 200 };
       setLoading(true);
-      if(response.status === 200){
+      if (response.status === 200) {
         await AsyncStorage.setItem('access_token', JSON.stringify(response.data.access_token));
-        navigation.navigete('Home');
+        navigation.navigate('Home');
       } else {
         Alert.alert('Ops', 'Verifique seu usuário e senha!!!');
       }
-    } catch (error){
+    } catch (error) {
       setLoading(false);
       console.log(error);
       Alert.alert('Erro', 'Não foi possível logar!!!');
-      navigation.navigete('Home');
+      navigation.navigate('Home');
     }
   };
 
   return (
     <Container>
       <WhiteBox>
+        <Title>Login</Title>
+        <Text style={{ textAlign: 'center', marginBottom: 20, color: '#555' }}>
+          Escreva seu nome de usuário e senha para entrar
+        </Text>
         <Form>
           <Input
             autoCapitalize="none"
             autoCorrect={false}
-            placeholder="Digite seu emails"
+            placeholder="Nome de usuário"
             underlineColorAndroid="rgba(0, 0, 0, 0)"
             value={email}
-            onChangeText={email => setEmail(email)}
+            onChangeText={(email) => setEmail(email)}
           />
+
+          <TouchableOpacity onPress={() => Alert.alert('Ajuda', 'Esqueceu o usuário?')}>
+            <LinkText>Esqueceu o usuário?</LinkText>
+          </TouchableOpacity>
 
           <Input
             autoCapitalize="none"
             autoCorrect={false}
-            placeholder="Digite sua senha"
+            placeholder="Senha"
             underlineColorAndroid="rgba(0, 0, 0, 0)"
             secureTextEntry={true}
             value={password}
-            onChangeText={password => setPassword(password)}
+            onChangeText={(password) => setPassword(password)}
           />
+
+          <TouchableOpacity onPress={() => Alert.alert('Ajuda', 'Esqueceu a senha?')}>
+            <LinkText>Esqueceu a senha?</LinkText>
+          </TouchableOpacity>
 
           <Button onPress={signIn}>
             {loading ? (
               <ActivityIndicator size="small" color="#FFF" />
             ) : (
-              <ButtonText>Entrar</ButtonText>
+              <ButtonText>Login</ButtonText>
             )}
           </Button>
           {!!errorMessage && <Error>{errorMessage}</Error>}
         </Form>
+
+        <TouchableOpacity onPress={() => Alert.alert('Registrar', 'Ir para registro')}>
+          <Text style={{ marginTop: 20, color: '#4f5b93', textAlign: 'center' }}>
+            Não tem uma conta? <Text style={{ fontWeight: 'bold' }}>Registre uma aqui!</Text>
+          </Text>
+        </TouchableOpacity>
       </WhiteBox>
     </Container>
   );
 }
-
-
-// import React from 'react';
-// import {Text, TouchableOpacity} from 'react-native';
-// import {UserService} from '_services';
-// import {CommonActions} from '@react-navigation/native';
-
-// const Login = ({navigation}) => {
-//   const login = () => {
-//     UserService.login({email: 'teste', token: 'teste'});
-//     //usa o reset abaixo pra ele não conseguir voltar pra tela de login após logar
-//     navigation.dispatch(
-//       CommonActions.reset({
-//         index: 1,
-//         routes: [{name: 'BottomTabNavigator'}],
-//       }),
-//     );
-//   };
-//   return (
-//     <>
-//       <Text>Tela de Login</Text>
-//       <TouchableOpacity onPress={login}>
-//         <Text>Clique para entrar</Text>
-//       </TouchableOpacity>
-//     </>
-//   );
-// };
-
-// export default Login;
